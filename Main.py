@@ -1,10 +1,10 @@
 """Clustering algorithm that built a dendrogram from
-fasta sequence computing distance between nucleotidic sequences test2
+fasta sequence computing distance between nucleotidic sequences
 """
 
 __authors__ = "Jules Garreau"
 __contact__ = "jules.garreau00@gmail.com"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __copyright__ = "copyleft"
 __date__  = "23/03/21"
 
@@ -14,35 +14,12 @@ import dendropy as dp
 import os
 
 #get the folder where the programm will load the fasta sequence
-path = __file__.split("Main.py")
-path = path[0]
-path = path + "hemoglobin"
-os.chdir(path)
+fct.choose_directory()
 
 #create list of Sequence object for each fasta sequence
 #(for info on the class Sequence see clustering_fct.py)
 files = os.listdir()
-sequence_list = []
-
-for i in range(0,len(files)):
-    with open(files[i], "r") as fasta_file:
-        fasta_seq = fasta_file.read()
-    
-    fasta_seq = fasta_seq.splitlines()
-    fasta_seq.pop(0)
-    first_fasta_seq = []
-    for j in range(0,len(fasta_seq)):
-        try:
-            if fasta_seq[j][0] == "\n":
-                break
-            
-            first_fasta_seq.append(fasta_seq[j])
-        except:
-            break
-    first_fasta_seq = "".join(first_fasta_seq)
-    first_fasta_seq.strip()
-    sequence_list.append(fct.Sequence(first_fasta_seq, files[i]))
-
+sequence_list = fct.get_sequence_list(files)
 
 #create a list of simple cluster (containing only one sequence)
 #for all the sequence in sequence_list

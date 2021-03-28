@@ -1,5 +1,7 @@
 from skbio.sequence import Sequence as SkSequence
 from copy import deepcopy
+from tkinter.filedialog import askdirectory
+from os import chdir
 
 class Sequence:
     """define a nucleotidic sequence and his associated label
@@ -36,7 +38,7 @@ class Sequence:
 
         """
         if len(self.sequence) > len(other.sequence):
-            cut = len(self.sequence)-len(other.sequence)
+            cut = len(self.sequence) - len(other.sequence)
             self.sequence = self.sequence[0:-cut]
         elif len(other.sequence) > len(self.sequence):
             cut = len(other.sequence) - len(self.sequence)
@@ -297,3 +299,77 @@ def clustering(cluster_list):
 
         cluster_list.append(Cluster(clusX,clusY))
     return cluster_list[0]
+
+
+
+def _format_label(organism, label):
+    """format the label of a sequence
+
+    format the label of a sequence to avoid any 
+    problem while convert the cluster in the newick
+    format using the labels
+    """
+    formated_label = organism + "-"
+    for i in range(0, len(label)):
+        
+        if label[i] == ")":
+            formated_label = formated_label + "]"
+        elif label[i] == "(":
+            formated_label = formated_label + "["
+        elif label[i] == " ":
+            formated_label = formated_label + "_"
+        elif label[i] == ":" or label[i] == "," or label[i] == ";":
+            formated_label = formated_label + "-"
+        else:
+            formated_label = formated_label + label[i]
+    
+    return formated_label
+
+
+
+def get_sequence_list(files):
+    """create a list of Sequence for all the sequence of all fasta files
+    
+    this function will create a list of Sequence object for all the 
+    the sequence of each file in the directory choose to at the launch
+    it will ignore a sequence if it is shorter than 3 nucleotide to
+    avoid error, and it will use the function format_label to make
+    sure the label of a Sequence don't make any conflict while convert
+    the cluster to newick format
+    """
+    sequence_list = []
+    for i in range(0,len(files)):
+        with open(files[i], "r") as fasta_file:
+            fasta_seq_all = fasta_file.read()
+    
+
+        fasta_seq_all = fasta_seq_all.split(">")
+
+        for j in range(0, len(fasta_seq_all)):
+            fasta_seq = fasta_seq_all[j]
+            if len(fasta_seq) > 2:
+            
+                fasta_seq = fasta_seq.splitlines()
+                label = _format_label(files[i], fasta_seq.pop(0))
+                format_fasta_seq = []
+                for k in range(0,len(fasta_seq)):
+                    try:
+                        if fasta_seq[k][0] == "\n":
+                            break
+            
+                        format_fasta_seq.append(fasta_seq[k])
+                    except:
+                        break
+                format_fasta_seq = "".join(format_fasta_seq)
+                format_fasta_seq.strip()
+                if len(format_fasta_seq) > 2:
+                    sequence_list.append(Sequence(format_fasta_seq, label))
+    
+    return sequence_list
+
+
+def choose_directory():
+    """ask for the folder containing the fasta files"""
+    
+    directory = askdirectory()
+    chdir(directory)
