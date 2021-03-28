@@ -58,7 +58,6 @@ class Cluster:
     with the list of the Sequence object, the list of the sequence
     of each Sequence (class) in string, and the label of each
     Sequence.
-    
     The method linkage return distance between the cluster and
     another one.
 
@@ -116,19 +115,21 @@ class Cluster:
                             "or str or Cluster class "
                             "not {}".format(type(elements)))
 
-
+    @property
     def get_cluster_elements(self):
         """return the list of the Sequence object of the cluster"""
         
         copy = deepcopy(self.cluster_elements)
         return copy
 
+    @property
     def get_cluster_elements_str(self):
         """return the list of the sequence of the cluster as strings"""
 
         copy = deepcopy(self.cluster_elements_str)
         return copy
     
+    @property
     def get_cluster_elements_labels(self):
         """return the list of the labels of the cluster as strings"""
         
@@ -145,8 +146,8 @@ class Cluster:
         """
         
         distance = 0
-        list1 = self.get_cluster_elements()
-        list2 = other.get_cluster_elements()
+        list1 = self.get_cluster_elements
+        list2 = other.get_cluster_elements
         lenght = 0
         t = 0
         
@@ -216,11 +217,11 @@ class Cluster:
         rebuilt the tree
         
         """
-        tree_list = self.get_cluster_elements_labels()
+        tree_list = self.get_cluster_elements_labels
         newick = "("
         
         
-        newick = get_newick_intermediate(tree_list,newick,False)
+        newick = _get_newick_intermediate(tree_list,newick,False)
 
         newick = newick[0] + ");"
 
@@ -228,7 +229,7 @@ class Cluster:
 
 
 
-def get_newick_intermediate(tree_list,newick, end):
+def _get_newick_intermediate(tree_list,newick, end):
     """recursive functions that finaly return a newick format of the cluster
     
     the function goes as "deeper" in the layer of list of each elements in
@@ -245,7 +246,7 @@ def get_newick_intermediate(tree_list,newick, end):
                 newick = newick + ","
                 end = False
             newick = newick + "("
-            newick, end = get_newick_intermediate(tree_list[i],newick,end)
+            newick, end = _get_newick_intermediate(tree_list[i],newick,end)
             newick = newick + ")"
 
         elif type(tree_list[i]) == str:
