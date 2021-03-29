@@ -16,7 +16,7 @@ import os
 #get the folder where the programm will load the fasta sequence
 fct.choose_directory()
 
-#create list of Sequence object for each fasta sequence
+#create list of Sequence object for each sequence in each fasta sequence
 #(for info on the class Sequence see clustering_fct.py)
 files = os.listdir()
 sequence_list = fct.get_sequence_list(files)

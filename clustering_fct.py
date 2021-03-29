@@ -216,7 +216,7 @@ class Cluster:
         
         use the get_newick_intermediate() recursive function to go 
         through the different layer of the list of the cluster and
-        rebuilt the tree
+        rebuilt the tree as a newick format string
         
         """
         tree_list = self.get_cluster_elements_labels
@@ -234,11 +234,11 @@ class Cluster:
 def _get_newick_intermediate(tree_list,newick, end):
     """recursive functions that finaly return a newick format of the cluster
     
-    the function goes as "deeper" in the layer of list of each elements in
+    The function goes through the different layer of list of each elements in
     the root of the main cluster and put "," , "(" , or ")" when necessary.
     And also put the Label when it encounter a string type of variable.
     end variable become True if the algorithm is about to start to
-    treat a new list and that the last element was a list too.
+    treat a new list and if the last element was a list too.
 
     """
     for i in range(0,len(tree_list)):
@@ -265,14 +265,14 @@ def _get_newick_intermediate(tree_list,newick, end):
 
 
 def clustering(cluster_list):
-    """clusterize a list of cluster, base on the distance between them
+    """clusterize a list of cluster, using the distance between them
 
     the algorithm will computing all the distance within all the
     cluster of the lists (expect between the same), then it will 
-    merge the two that shows seems the closest, creating a new cluster,
-    and remove the two that was merged in one. The loop will continue 
-    untill there is only one cluster left in the list, then it return 
-    this cluster.
+    merge the two that seems the closest, creating a new cluster,
+    and remove from the list the two that was merged in one. The 
+    loop will continue untill there is only one cluster left in the list, 
+    then it return this cluster.
 
     """
     while len(cluster_list) > 1:
@@ -331,7 +331,7 @@ def get_sequence_list(files):
     """create a list of Sequence for all the sequence of all fasta files
     
     this function will create a list of Sequence object for all the 
-    the sequence of each file in the directory choose to at the launch
+    the sequence of each file in the directory choose at the launch
     it will ignore a sequence if it is shorter than 3 nucleotide to
     avoid error, and it will use the function format_label to make
     sure the label of a Sequence don't make any conflict while convert
