@@ -1,9 +1,12 @@
 # Clustering_project_JGaro
 
 hemoglobin : folder containing gene sequence of the hemoglobin of few species
+
 hemoglobin_first_sequence : folder containing the same fasta files but with only the first sequence of
                             each file of the previous folder.
+
 Main.py : main file of the algorithm.
+
 clustering_fct : contain alls the Class and Functions of the algorithm.
 
 
