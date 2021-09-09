@@ -37,3 +37,5 @@ newick = clustered_cluster.get_newick()
 #construct and plot the dendrogram 
 tree = dp.Tree.get(data = newick, schema = "newick")
 tree.print_plot()
+
+#test de changements
